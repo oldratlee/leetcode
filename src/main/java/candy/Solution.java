@@ -1,8 +1,5 @@
 package candy;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * <a href="http://oj.leetcode.com/problems/candy/">Problem URL</a>
  *
@@ -14,56 +11,42 @@ public class Solution {
         return calcCandyCount(ratings);
     }
 
-    private static class UndulationInfo {
-        public UndulationInfo(int adjust, int upLen, int downLen) {
-            this.adjust = adjust;
-            this.upLen = upLen;
-            this.downLen = downLen;
-        }
-
-        public int adjust;
-        public int upLen;
-        public int downLen;
-    }
-
     public static int calcCandyCount(int[] weights) {
+        if (weights == null || weights.length == 0) return 0;
+
         final int length = weights.length;
-
+        int count = 0;
         int adjust = 0;
-        List<UndulationInfo> infoList = new ArrayList<UndulationInfo>();
-        for (int i = 0; i < length; ) {
-            int up = 0;
-            int down = 0;
-            while (i + 1 < length && weights[i + 1] > weights[i]) {
-                ++up;
-                ++i;
+        int idx = 0;
+        while (true) {
+            int upLen = 0;
+            int downLen = 0;
+            while (idx + 1 < length && weights[idx + 1] > weights[idx]) {
+                ++upLen;
+                ++idx;
             }
-            while (i + 1 < length && weights[i + 1] < weights[i]) {
-                ++down;
-                ++i;
+            while (idx + 1 < length && weights[idx + 1] < weights[idx]) {
+                ++downLen;
+                ++idx;
             }
-            infoList.add(new UndulationInfo(adjust, up, down));
+            count += calcUndulationSum(adjust, upLen, downLen);
 
-            if (i == length - 1) break;
-            if (i + 1 < length && weights[i + 1] == weights[i]) {
+            if (idx == length - 1) break;
+            if (idx + 1 < length && weights[idx + 1] == weights[idx]) {
                 adjust = 0; // 如果相等，新起一个没有起点重合的山坡
-                i++;
+                ++idx;
             } else {
                 adjust = -1; // 如果不相等（实际上是重新上坡），新起一个起点重合的山坡。校正值为-1
             }
         }
 
-        return calcFromUndulationInfo(infoList);
+        return count;
     }
 
-    private static int calcFromUndulationInfo(List<UndulationInfo> infoList) {
-        int count = 0;
-        for (UndulationInfo info : infoList) {
-            count += info.adjust // 校正值
-                    + info.upLen * (info.upLen + 1) / 2 // 上升坡的和
-                    + info.downLen * (info.downLen + 1) / 2 // 下降坡的和
-                    + Math.max(info.upLen, info.downLen) + 1; // 坡顶的值
-        }
-        return count;
+    private static int calcUndulationSum(int adjust, int upLen, int downLen) {
+        return adjust // 校正值
+                + upLen * (upLen + 1) / 2 // 上升坡的和
+                + downLen * (downLen + 1) / 2 // 下降坡的和
+                + Math.max(upLen, downLen) + 1; // 坡顶的值
     }
 }
