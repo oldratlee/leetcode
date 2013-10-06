@@ -1,10 +1,19 @@
+package candy;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <a href="http://oj.leetcode.com/problems/candy/">Problem URL</a>
+ *
  * @author Jerry Lee
  */
-public class Candy {
+public class Solution {
+    public int candy(int[] ratings) {
+        // Note: The Solution object is instantiated only once and is reused by each test case.
+        return calcCandyCount(ratings);
+    }
+
     private static class UndulationInfo {
         public UndulationInfo(int adjust, int upLen, int downLen) {
             this.adjust = adjust;
