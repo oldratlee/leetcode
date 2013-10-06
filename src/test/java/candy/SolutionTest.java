@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Jerry Lee
  */
-public class CandyTest {
+public class SolutionTest {
     @Test
     public void test_candy() throws Exception {
         assertEquals(0, Solution.calcCandyCount(new int[]{}));
