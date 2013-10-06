@@ -20,13 +20,11 @@ public class Solution {
             final char c = s.charAt(i);
 
             if (duplexMap.containKey(c)) {
-                Integer idx = duplexMap.get(c);
-                if (idx == null) {
-                    continue;
+                if (i - start > len) {
+                    len = i - start;
                 }
 
-                if (i - start > len)
-                    len = i - start;
+                Integer idx = duplexMap.get(c);
                 for (int j = start; j < idx; ++j) {
                     duplexMap.removeValue(j);
                 }
