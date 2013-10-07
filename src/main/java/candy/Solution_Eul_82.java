@@ -4,7 +4,7 @@ package candy;
  * <a href="http://oj.leetcode.com/problems/candy/">Problem URL</a>
  * <a href="http://blog.csdn.net/u012334315/article/details/12384611">Eul_82</a>
  *
- * @author Jerry Lee
+ * @author Eul_82
  */
 public class Solution_Eul_82 {
     public int candy(int[] ratings) {
