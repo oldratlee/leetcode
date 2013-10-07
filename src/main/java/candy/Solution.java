@@ -19,7 +19,7 @@ public class Solution {
 
         int count = 0; //糖果总数
         int cur = 1;
-        int preTop = Integer.MAX_VALUE; // 设置int_max，之后波谷就不需要校正，因为下坡长度不会大于int_max
+        int preTop = Integer.MAX_VALUE; // 设置int_max，之后波谷就不需要校正，只要下坡长度不会大于int_max（这点可以认为成立）
 
         for (int i = 0; i < len; ++i) {
             // 重置cur，调整preTop
