@@ -30,8 +30,10 @@ public class SolutionTest {
         assertEquals(6, Solution.calcCandyCount(new int[]{3, 2, 1}));
 
         assertEquals(7, Solution.calcCandyCount(new int[]{1, 2, 3, 3}));
+        assertEquals(7, Solution.calcCandyCount(new int[]{1, 3, 2, 1}));
 
         assertEquals(9, Solution.calcCandyCount(new int[]{1, 2, 3, 3, 1}));
+        assertEquals(11, Solution.calcCandyCount(new int[]{1, 4, 3, 2, 1}));
         assertEquals(10, Solution.calcCandyCount(new int[]{1, 2, 3, 3, 3, 1}));
     }
 }

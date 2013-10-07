@@ -2,8 +2,11 @@ package candy;
 
 /**
  * <a href="http://oj.leetcode.com/problems/candy/">Problem URL</a>
+ * <p/>
+ * 利用对称性，递增累加。在<a href="http://blog.csdn.net/u012334315/article/details/12384611">Eul_82</a>的基础上调整。
  *
  * @author Jerry Lee
+ * @see Solution_Eul_82
  */
 public class Solution {
     public int candy(int[] ratings) {
@@ -11,42 +14,37 @@ public class Solution {
         return calcCandyCount(ratings);
     }
 
-    public static int calcCandyCount(int[] weights) {
-        if (weights == null || weights.length == 0) return 0;
+    public static int calcCandyCount(int[] ratings) {
+        final int len = ratings.length;
 
-        final int length = weights.length;
-        int count = 0;
-        int adjust = 0;
-        int idx = 0;
-        while (true) {
-            int upLen = 0;
-            int downLen = 0;
-            while (idx + 1 < length && weights[idx + 1] > weights[idx]) {
-                ++upLen;
-                ++idx;
-            }
-            while (idx + 1 < length && weights[idx + 1] < weights[idx]) {
-                ++downLen;
-                ++idx;
-            }
-            count += calcUndulationSum(adjust, upLen, downLen);
+        int count = 0; //糖果总数
+        int cur = 1;
+        int preTop = Integer.MAX_VALUE; // 设置int_max，之后波谷就不需要校正，因为下坡长度不会大于int_max
 
-            if (idx == length - 1) break;
-            if (idx + 1 < length && weights[idx + 1] == weights[idx]) {
-                adjust = 0; // 如果相等，新起一个没有起点重合的山坡
-                ++idx;
-            } else {
-                adjust = -1; // 如果不相等（实际上是重新上坡），新起一个起点重合的山坡。校正值为-1
+        for (int i = 0; i < len; ++i) {
+            // 重置cur，调整preTop
+            if (i - 1 >= 0 && ratings[i - 1] == ratings[i]) { // 相等直接重置
+                cur = 1;
+                preTop = Integer.MAX_VALUE;
+            } else if (i - 2 >= 0 && ratings[i - 2] < ratings[i - 1] && ratings[i - 1] > ratings[i]) { // 开始下坡
+                preTop = cur - 1;
+                cur = 1;
+            } else if (i - 2 >= 0 && ratings[i - 2] > ratings[i - 1] && ratings[i - 1] < ratings[i]) { // 开始上坡
+                cur = 2; // 波谷是1，而波谷后的开始上坡的值是2
             }
+
+            // 波谷 或 下坡到尾部 时，进行校正
+            if (i - 1 >= 0 && i + 1 < len && ratings[i - 1] > ratings[i] && ratings[i] <= ratings[i + 1]
+                    || i - 1 >= 0 && i == len - 1 && ratings[i - 1] > ratings[i]) {
+                int delta = cur + 1 - preTop; // 下坡长度 大于 上坡长度 的量，即是要校正的量
+                if (delta > 0) {
+                    cur += delta;
+                }
+            }
+
+            count += cur;
+            cur++;
         }
-
         return count;
-    }
-
-    private static int calcUndulationSum(int adjust, int upLen, int downLen) {
-        return adjust // 校正值
-                + upLen * (upLen + 1) / 2 // 上升坡的和
-                + downLen * (downLen + 1) / 2 // 下降坡的和
-                + Math.max(upLen, downLen) + 1; // 坡顶的值
     }
 }

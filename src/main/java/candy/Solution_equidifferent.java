@@ -5,10 +5,12 @@ import java.util.List;
 
 /**
  * <a href="http://oj.leetcode.com/problems/candy/">Problem URL</a>
+ * 
+ * 找出上下坡的信息，等差求和
  *
  * @author Jerry Lee
  */
-public class Solution2 {
+public class Solution_equidifferent {
     public int candy(int[] ratings) {
         // Note: The Solution object is instantiated only once and is reused by each test case.
         return calcCandyCount(ratings);
@@ -26,26 +28,26 @@ public class Solution2 {
         public int downLen;
     }
 
-    public static int calcCandyCount(int[] weights) {
-        final int length = weights.length;
+    public static int calcCandyCount(int[] ratings) {
+        final int length = ratings.length;
 
         int adjust = 0;
         List<UndulationInfo> infoList = new ArrayList<UndulationInfo>();
         for (int i = 0; i < length; ) {
             int upLen = 0;
             int downLen = 0;
-            while (i + 1 < length && weights[i + 1] > weights[i]) {
+            while (i + 1 < length && ratings[i + 1] > ratings[i]) {
                 ++upLen;
                 ++i;
             }
-            while (i + 1 < length && weights[i + 1] < weights[i]) {
+            while (i + 1 < length && ratings[i + 1] < ratings[i]) {
                 ++downLen;
                 ++i;
             }
             infoList.add(new UndulationInfo(adjust, upLen, downLen));
 
             if (i == length - 1) break;
-            if (i + 1 < length && weights[i + 1] == weights[i]) {
+            if (i + 1 < length && ratings[i + 1] == ratings[i]) {
                 adjust = 0; // 如果相等，新起一个没有起点重合的山坡
                 ++i;
             } else {
