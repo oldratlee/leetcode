@@ -3,7 +3,7 @@ package candy;
 /**
  * <a href="http://oj.leetcode.com/problems/candy/">Problem URL</a>
  * <p/>
- * 利用对称性，递增累加。在<a href="http://blog.csdn.net/u012334315/article/details/12384611">Eul_82</a>的基础上调整。
+ * 基于<a href="http://blog.csdn.net/u012334315/article/details/12384611">Eul_82</a>的算法思路：利用对称性，递增累加。
  *
  * @author Jerry Lee
  * @see Solution_Eul_82
@@ -21,7 +21,7 @@ public class Solution {
         int cur = 1;
         int preTop = Integer.MAX_VALUE; // 设置int_max，之后波谷就不需要校正，只要下坡长度不会大于int_max（这点可以认为成立）
 
-        for (int i = 0; i < len; ++i) {
+        for (int i = 0; i < len; ++i, ++cur) {
             // 重置cur，调整preTop
             if (i - 1 >= 0 && ratings[i - 1] == ratings[i]) { // 相等直接重置
                 cur = 1;
@@ -43,7 +43,6 @@ public class Solution {
             }
 
             count += cur;
-            cur++;
         }
         return count;
     }
