@@ -1,9 +1,9 @@
-My leetcode
+My LeetCode
 ========================
 
 My submission code of LeetCode problems.
 
-what's LeetCode
+What's LeetCode
 ------------------------
 
 LeetCode is a social platform for preparing IT technical interviews. We strive to provide you with the best learning experience in preparing interviews for companies in the IT industry.
