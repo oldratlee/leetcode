@@ -23,7 +23,7 @@ public class Solution {
 
         for (int i = 0; i < len; ++i, ++cur) {
             // 重置cur，调整preTop
-            if (i - 1 >= 0 && ratings[i - 1] == ratings[i]) { // 相等直接重置
+            if (i - 1 >= 0 && ratings[i - 1] == ratings[i]) { // 相等，直接重置
                 cur = 1;
                 preTop = Integer.MAX_VALUE;
             } else if (i - 2 >= 0 && ratings[i - 2] < ratings[i - 1] && ratings[i - 1] > ratings[i]) { // 开始下坡
